@@ -1,0 +1,23 @@
+T | 1 | read book
+D | 0 | return book | June 6th
+T | 1 | join sports club
+T | 0 | Go Running
+T | 0 | Clear the Trash
+T | 0 | paint the wall
+D | 0 | finish Task Manager Level 5 | October 2nd
+D | 0 | pay ERP fine | October 3rd
+D | 0 | one | this year
+T | 0 | run marathon
+D | 0 | finish playing Fifa19 | December 25th
+T | 0 | buy papers
+T | 0 | thow rubbish
+D | 0 | paint the room | year end
+T | 0 | buy food
+D | 0 | finish writing compo | year end
+T | 0 | Watch Youtube video on Java Programming
+T | 0 | Finish Web programming and Database project
+T | 0 | Do 100 pushups a day
+D | 0 | Create Report | 3rd November
+T | 0 | change car seat
+D | 0 | wash car | 2nd November
+T | 0 | buy milk

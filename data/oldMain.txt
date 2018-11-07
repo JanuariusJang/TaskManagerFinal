@@ -1,0 +1,124 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+
+
+public class Main {
+    static Scanner in = new Scanner(System.in);
+    //static Task[] tasks = new Task[100];
+    static List<Task> tasks = new ArrayList<>();
+    static int newCount;  // to keep track of number of tasks in the list
+
+
+
+    public static void main(String[] args) {
+
+
+        tasks.addAll(getTasksFromFile.getTasksFromFile());
+        newCount=0;
+
+        printWelcome();
+        String line;
+        boolean isExit = false;
+        while (!isExit) {
+            try{
+            askUserInput();
+            line = getInput();
+            String command = line.split(" ")[0]; //extract the first word of the user input
+            switch (command) {
+                case "exit":
+                case "": // exit if user input is empty
+                    isExit = true;
+                    break;
+                case "todo":
+                   addTodo(line);
+                    break;
+                case"deadline":
+                    addDeadline(line);
+                    break;
+                case "print":
+                    printTasks();
+                    break;
+                case "done":
+                    markAsDone(line);
+                    break;
+                case "save":
+                    SaveTaskToFile.saveFile(tasks,newCount);
+                    break;
+                default:
+                    printError();
+            }}
+            catch (TaskManagerException e){
+                printError(e.getMessage());
+            }
+        }
+        exit();
+
+    }
+    private static void printWelcome() {
+        System.out.println("Welcome to TaskManager-Level1!");
+    }
+    private static void askUserInput() {
+        System.out.print("Your Task?   ");
+    }
+
+
+
+    private static void printTasks() {
+        for (int i = 0; i < tasks.size(); i++) {
+            //System.out.println("[" + (i + 1) + "] " + "description: " + tasks.get(i).getDescription());
+            System.out.println("[" + (i + 1) + "] " + "description: " + tasks.get(i).asString());
+            System.out.println(" ");
+            /*String yesno = tasks.get(i).isDone()? "yes": "no";
+            System.out.println("is done?  " + yesno);
+            if (tasks.get(i) instanceof Deadline)
+            {
+                System.out.println("do by:   " + ((Deadline)tasks.get(i)).getBy());
+            }*/
+        }
+    }
+
+    private static void addDeadline(String line){
+        String description=line.split("/by")[0];
+        String deadline=line.split("/by")[1];
+        //tasks[count]=new Deadline(description.substring("deadline".length()).trim(),deadline.trim());
+        tasks.add(new Deadline(description.substring("deadline".length()).trim(),deadline.trim()));
+        newCount++;
+        System.out.println("Tasks in the list: "+ tasks.size());
+    }
+
+    private static void addTodo(String line) throws TaskManagerException{
+        String description = line.substring("todo".length()).trim();
+        if (description.isEmpty()){
+            throw new TaskManagerException("Empty description for Todo");
+        }
+        //tasks[count]=new Todo(description);
+        tasks.add(new Todo(description));
+        //tasks[count]=new Todo(line.substring("todo".length()).trim());
+
+        newCount++;
+        System.out.println("Tasks in the list: "+tasks.size());
+    }
+    private static void markAsDone(String line) {
+        int index = Integer.parseInt(line.substring("done".length()).trim());
+        tasks.get(index - 1).setDone(true);
+        System.out.println("Tasks in the list: " + tasks.size());
+    }
+
+    private static void printError() {
+        System.out.println("Unknown command! please try again");
+    }
+    private static void printError(String errorMsg) {
+        System.out.println(errorMsg+ " error! please try again");
+    }
+
+    private static String getInput() {
+        return in.nextLine();
+    }
+
+
+    private static void exit() {
+        System.out.println("Good Bye !");
+    }
+
+}
